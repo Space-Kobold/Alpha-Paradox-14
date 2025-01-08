@@ -28,7 +28,7 @@ jobs:
           path-to-signatures: 'Attribution/CLA-v1.json'
           path-to-document: 'https://gist.github.com/SpaceKoboldGames/a8f6b7a7d272cf949c60e0822cdf226e' # e.g. a CLA or a DCO document
           # branch should not be protected
-          branch: 'dev'
+          branch: 'master'
           allowlist: jezithyrbot SpaceKoboldGames
           # the followings are the optional inputs - If the optional inputs are not given, then default values will be taken
           #remote-organization-name: enter the remote organization name where the signatures should be stored (Default is storing the signatures in the same repository)
