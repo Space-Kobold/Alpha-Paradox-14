@@ -1,9 +1,17 @@
-# Reporting a security vulnerability
-You can report a security vulnerability through Discord or through email.
+<!--
+SPDX-FileCopyrightText: 2025 Space Kobold Games and Contributors <https://github.com/space-kobold/alpha-paradox>
 
-If you want to send an email, you can contact us at <telecommunications@spacestation14.com>.
-If you want to contact us through Discord, you can join [our server](https://discord.gg/MwDDf6t)
-and then **privately** message anyone with the `@Wizard` or `@SS14 Maintainer` role.
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
 
-In either case, **do not publicly disclose the vulnerability until we explicitly give
-you permission to do so**.
+# SECURITY
+
+## Reporting Security Issues
+
+If you think you've found a security vulnerability, please report it privately and responsibly to us. Do not publically
+disclose any vulnerabilities unless we have given you explicit permission.
+
+You can reach out via the following avenues:
+
+- You can privately message one of the members of the Directorate on the [Discord](https://discord.alpha-paradox.com).
+- You can send an email to [security@alpha-paradox.com](mailto:security@alpha-paradox.com).

@@ -5,23 +5,23 @@
 -->
 
 <div align="center">
-    <a href="https://github.com/space-kobolds/alpha-paradox">
-        <p>Hi</p>
-    </a>
+<a href="https://github.com/space-kobolds/alpha-paradox">
+    <img src=".github/logo.webp" width="100" height="100"/>
+</a>
 
-    <h1 align="center">Alpha Paradox</h1>
+<h1 align="center">Alpha Paradox</h1>
 
-    <p align="center">A Space Station 14 experience crafted for deep immersion and deliberate storytelling</p>
+<p align="center">A Space Station 14 experience crafted for deep immersion and deliberate storytelling</p>
 
-    <p align="center">
-        <a href="https://alpha-paradox.com">Website</a>
-        &middot;
-        <a href="https://discord.alpha-paradox.com">Discord</a>
-        &middot;
-        <a href="https://devwiki.alpha-paradox.com">Dev Wiki</a>
-        &middot;
-        <a href="https://wiki.alpha-paradox.com">Player Wiki</a>
-    </p>
+<p align="center">
+    <a href="https://alpha-paradox.com">Website</a>
+    &middot;
+    <a href="https://discord.alpha-paradox.com">Discord</a>
+    &middot;
+    <a href="https://devwiki.alpha-paradox.com">Dev Wiki</a>
+    &middot;
+    <a href="https://wiki.alpha-paradox.com">Player Wiki</a>
+</p>
 </div>
 
 ---
@@ -30,7 +30,7 @@
 
 AlphaParadox is a fork of [space-wizards/space-station-14](https://github.com/space-wizards/space-station-14) ("Space Station 14"), focused on creating a more immersive experience through longer rounds and a focused design direction.
 
-Space Station 14 itself is a C# remake of Space Station 13, which uses the custom [space-wizards/RobustToolbox](https://github.com/space-wizards/RobustToolbox) game engine.
+Space Station 14 itself is a C# remake of Space Station 13, which uses the custom [space-wizards/RobustToolbox](https://github.com/space-wizards/RobustToolbox) ("RobustToolbox" or "RT") game engine.
 
 ## Contributing
 
@@ -65,7 +65,7 @@ information.
 All files either have a header providing the license and copyright information, or have a `REUSE.toml` in same directory
 listing its copyright.
 
-License text can be found in the [Licenses directory](./Licenses).
+License text can be found in the [Licenses directory](./LICENSES).
 
 We have a [Contributor License Agreement](./LEGAL.md) that will need to be signed before any contributions.
 
