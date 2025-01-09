@@ -1,38 +1,72 @@
-<p align="center"> <img alt="Space Station 14" width="880" height="300" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
+<!--
+    SPDX-License-Identifier: CC-BY-SA-4.0
 
-Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), a homegrown engine written in C#.
+    SPDX-FileCopyrightText: Space Kobold Games and Contributors <https://github.com/space-kobold/alpha-paradox>
+-->
 
-Alpha-Paradox is a fork of Space Station 14 focused on creating a more immersive experience through longer rounds and a focused design direction.
+<div align="center">
+    <a href="https://github.com/space-kobolds/alpha-paradox">
+        <p>Hi</p>
+    </a>
 
-## Links
+    <h1 align="center">Alpha Paradox</h1>
 
-[Website](https://alpha-paradox.com/) | [Discord](https://discord.alpha-paradox.com/) | [Player Wiki](https://wiki.alpha-paradox.com/) | [Dev Wiki](https://devwiki.alpha-paradox.com/)
+    <p align="center">A Space Station 14 experience crafted for deep immersion and deliberate storytelling</p>
 
-## Documentation/Wiki
+    <p align="center">
+        <a href="https://alpha-paradox.com">Website</a>
+        &middot;
+        <a href="https://discord.alpha-paradox.com">Discord</a>
+        &middot;
+        <a href="https://devwiki.alpha-paradox.com">Dev Wiki</a>
+        &middot;
+        <a href="https://wiki.alpha-paradox.com">Player Wiki</a>
+    </p>
+</div>
 
-Alpha-Paradox has a [Developer Wiki](https://devwiki.alpha-paradox.com/index.php/Main_Page) to provide guides and technical/design documentation.
+---
 
-Additionally, Space Wizards has its own [docs site](https://docs.spacestation14.io/) which has good documentation on Wizden content, the engine, and more. We also have lots of resources for new contributors to the project.
+## About Alpha Paradox
+
+AlphaParadox is a fork of [space-wizards/space-station-14](https://github.com/space-wizards/space-station-14) ("Space Station 14"), focused on creating a more immersive experience through longer rounds and a focused design direction.
+
+Space Station 14 itself is a C# remake of Space Station 13, which uses the custom [space-wizards/RobustToolbox](https://github.com/space-wizards/RobustToolbox) game engine.
 
 ## Contributing
-We are happy to accept contributions from anybody, feel free to [join our discord](http://discord.alpha-paradox.com) if you are interested! We've got a [list of issues](https://github.com/space-kobold/alpha-paradox/issues) that need to be done and anybody can pick them up. Don't be afraid to ask for help either!  
 
-**Community Translations are always welcome!** However to ensure a high quality of translations, small/individual translations are not currently being accepted on their own. If a translation effort does not already exist for your language and you wish to organize one, please create a Github Issue or send Jezithyr a message on Discord to request starting an official translation project.
+Alpha Paradox welcomes community contributions.
 
-For more information please read over [Contributing.md](https://github.com/Space-Kobold/Alpha-Paradox/blob/master/Contributing.md) or the [how to contribute guide](https://devwiki.alpha-paradox.com/index.php/Guide:How_To_Contribute) on the developer wiki.
+Check out [CONTRIBUTING.md](./CONTRIBUTING.md) for information on how to contribute.
 
-## Licensing/Attribution:
-These are just the most important points, Please read [Legal.md](https://github.com/Space-Kobold/Alpha-Paradox/blob/master/Legal.md) for the specifics around licensing/attribution/copyright.
-- Unless specified otherwise, all Source Code, inside any **\_AlphaParadox, AlphaParadox, or \_APCore folders**, fall under the terms specified in AP-LICENSE.txt *with Exhibit B enforced* and the [Space Kobold Games CLA](https://gist.github.com/SpaceKoboldGames/a8f6b7a7d272cf949c60e0822cdf226e). All assets/content in those folders falls under CC-BY-SA 4.0 unless otherwise specified.
-- Any content from SpaceWizards/SpaceStation14 without specified licensing of any code is licensed under MIT (LICENSE.txt). Any Space Wizards content licensed under CC-BY-SA 3.0 to Space Wizards Federation & Contributors.
-- __**You may not apply secondary licenses to SpaceKobolds/AlphaParadox code/content (MPL Exhibit-B). This is to make sure that Alpha-Paradox's code is available to be improved by the community and prevent fragmenting the community due to license conflicts.**__
-- All code submitted by you where you hold the right to do so will be licensed under MPL 2.0 *with Exhibit B* to Space Kobold Games. Under the terms of our CLA, you grant us non-exclusive rights to use/license your code. **You still retain the rights and ownership of your contribution.**
-- Contributing MPL code sublicensed to you *without Exhibit B* is permitted and compatible but those files must be clearly marked.
+## Forking
 
-# Forking Alpha-Paradox
-- You are welcome to fork Alpha Paradox or use any of our content or code in your Space Station Fork, *but please keep in mind our license and properly provide attribution*. Make sure to keep any licensing/attribution headers or files intact, and if you are merging code/content from us, add the appropriate headers.
-- ### Under MPL 2.0 Exhibit B, you are not permitted to use *any* Alpha Paradox Exhibit B code alongside GPL/LGPL/AGPL or "Strong" copyleft licensed code or assets.
-- You should disable or remove the CLA Github action found in .github/workflows/cla.yml (You can also modify it to be a simple attribution tracker or point it to your own CLA if you use one).
+Alpha Paradox is open to forks, but remember to comply with all licenses as stated within the files.
 
-## Upstream Links
-[Wizden Github](https://github.com/space-wizards/space-station-14) | [Wizden Discord](https://discord.ss14.io/) | [Wizden Forum](https://forum.spacestation14.io/) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [SS14 Website](https://spacestation14.io/) | [Standalone Download](https://spacestation14.io/about/nightlies/)
+**Do not, under any circumstances, remove any file-based or other attributions.**
+
+Alpha Paradox has many `MPL-2.0` ("MPLv2") and `MPL-2.0-no-copyleft-exception` ("MPLv2 Exhibit B") files, which requires
+release of modified files. `MPL-2.0-no-copyleft-exception` additionally does not allow you to relicense/incorporate it
+inside of a LGPL/GPL/AGPL codebase.
+
+There are also many `CC-BY-SA-NC-4.0` files, which may need to be removed for commercial forks.
+
+Finally, we would suggest disabling things such as:
+- The CLA GitHub action found in `.github/workflows/cla.yml`.
+
+## Licensing/Attribution
+
+Alpha Paradox is a relatively unique example of a multi-licensed project. Much of that is inherited from Space Station 13/14's storied history.
+
+For the most important points, please read [LEGAL.md](./LEGAL.md).
+
+In short, we use [REUSE tool](https://reuse.software/) to ensure files are all licensed and provided with copyright
+information.
+
+All files either have a header providing the license and copyright information, or have a `REUSE.toml` in same directory
+listing its copyright.
+
+License text can be found in the [Licenses directory](./Licenses).
+
+We have a [Contributor License Agreement](./LEGAL.md) that will need to be signed before any contributions.
+
+**Finally, always ensure you are in compliance with the license.**
