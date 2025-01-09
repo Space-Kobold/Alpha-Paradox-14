@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+#
+# SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
 # Import future so people on py2 still get the clear error that they need to upgrade.
 from __future__ import print_function
 import sys

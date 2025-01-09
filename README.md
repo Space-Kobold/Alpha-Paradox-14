@@ -1,7 +1,7 @@
 <!--
-    SPDX-License-Identifier: CC-BY-SA-4.0
+SPDX-FileCopyrightText: 2025 Space Kobold Games and Contributors <https://github.com/space-kobold/alpha-paradox>
 
-    SPDX-FileCopyrightText: Space Kobold Games and Contributors <https://github.com/space-kobold/alpha-paradox>
+SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 <div align="center">
