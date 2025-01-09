@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+
+# SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+#
+# SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
 # Installs git hooks, updates them, updates submodules, that kind of thing.
 
 import subprocess

@@ -1,16 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-This is a dummy .csproj file to check things like submodules.
-Better this than other errors.
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
 
-If you want to create this kind of file yourself, you have to create an empty .NET application,
-Then strip it of everything until you have the <Project> tags.
-VS refuses to load the project if you make a bare project file and use Add -> Existing Project... for some reason.
-
-You want to handle the Build, Clean and Rebuild tasks to prevent missing task errors on build.
-
-If you want to learn more about these kinds of things, check out Microsoft's official documentation about MSBuild:
-https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
 -->
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
