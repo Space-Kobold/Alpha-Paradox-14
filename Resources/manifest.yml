@@ -1,5 +1,8 @@
-﻿defaultWindowTitle: Space Station 14
+# SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+# SPDX-FileCopyrightText: 2025 Space Kobold Games and Contributors <https://github.com/space-kobold/alpha-paradox>
+#
+# SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards AND MIT
+
+defaultWindowTitle: Alpha Paradox
 windowIconSet: /Textures/Logo/icon
 splashLogo: /Textures/Logo/logo.png
-
-# PJB PLEASE

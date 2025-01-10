@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 <div align="center">
 <a href="https://github.com/space-kobolds/alpha-paradox">
-    <img src=".github/logo.webp" width="100" height="100"/>
+    <img src="Resources/Textures/Logo/logo.png" width="100" height="100"/>
 </a>
 
 <h1 align="center">Alpha Paradox</h1>
