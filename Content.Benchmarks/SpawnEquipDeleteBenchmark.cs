@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
 
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
