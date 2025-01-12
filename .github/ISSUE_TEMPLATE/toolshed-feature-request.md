@@ -1,10 +1,13 @@
 ---
+# SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+#
+# SPDX-License-Identifier: CC-BY-SA-3.0
+
 name: Toolshed feature request
 about: Suggest a feature for Toolshed (for game admins/developers)
 title: "[TOOLSHED REQUEST]"
 labels: Toolshed
 assignees: moonheart08
-
 ---
 
 **Is your feature request related to a problem/bug? Please describe.**
