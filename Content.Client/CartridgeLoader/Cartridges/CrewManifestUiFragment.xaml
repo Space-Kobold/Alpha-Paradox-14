@@ -1,4 +1,10 @@
-﻿<cartridges:CrewManifestUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<cartridges:CrewManifestUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
                                    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                                    xmlns:ui="clr-namespace:Content.Client.CrewManifest.UI"
                                    xmlns="https://spacestation14.io" Margin="1 0 2 0">

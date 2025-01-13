@@ -1,4 +1,8 @@
-﻿using Content.Shared.Chasm;
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
+using Content.Shared.Chasm;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;

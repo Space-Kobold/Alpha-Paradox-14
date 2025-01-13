@@ -1,4 +1,10 @@
-﻿<DefaultWindow Title="{Loc Make Ghost Role}"
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<DefaultWindow Title="{Loc Make Ghost Role}"
             xmlns="https://spacestation14.io">
 
     <BoxContainer Orientation="Vertical">

@@ -1,4 +1,10 @@
-﻿<ui:RadialMenu xmlns="https://spacestation14.io"
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<ui:RadialMenu xmlns="https://spacestation14.io"
                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                 BackButtonStyleClass="RadialMenuBackButton"
                 CloseButtonStyleClass="RadialMenuCloseButton"

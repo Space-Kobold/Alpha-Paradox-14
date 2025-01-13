@@ -1,4 +1,10 @@
-﻿<mapping:MappingActionsButton
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<mapping:MappingActionsButton
     xmlns="https://spacestation14.io"
     xmlns:mapping="clr-namespace:Content.Client.Mapping"
     StyleClasses="ButtonSquare" ToggleMode="True" SetSize="32 32" Margin="0 0 5 0"

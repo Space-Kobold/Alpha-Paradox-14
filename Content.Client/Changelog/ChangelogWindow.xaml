@@ -1,4 +1,10 @@
-﻿<ui:ChangelogWindow xmlns="https://spacestation14.io"
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<ui:ChangelogWindow xmlns="https://spacestation14.io"
                     xmlns:ui="clr-namespace:Content.Client.Changelog"
                     Title="{Loc 'changelog-window-title'}"
                     MinSize="500 400"

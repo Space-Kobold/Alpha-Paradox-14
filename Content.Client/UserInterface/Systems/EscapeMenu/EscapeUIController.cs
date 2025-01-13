@@ -1,4 +1,8 @@
-﻿using Content.Client.Gameplay;
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
+using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;

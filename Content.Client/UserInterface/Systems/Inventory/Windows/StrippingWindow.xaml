@@ -1,4 +1,10 @@
-﻿<windows:StrippingWindow
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<windows:StrippingWindow
     xmlns="https://spacestation14.io"
     xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Windows"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"

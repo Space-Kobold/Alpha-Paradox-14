@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
 <Popup xmlns="https://spacestation14.io">
     <PanelContainer Name="MenuPanel">
         <ScrollContainer Name="Scroll" VerticalExpand="True" HScrollEnabled="False" ReturnMeasure="True" ReserveScrollbarSpace="False">

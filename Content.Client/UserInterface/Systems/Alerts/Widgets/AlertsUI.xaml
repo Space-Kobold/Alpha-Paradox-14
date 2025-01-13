@@ -1,4 +1,10 @@
-﻿<widgets:AlertsUI xmlns="https://spacestation14.io"
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<widgets:AlertsUI xmlns="https://spacestation14.io"
                   xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
                   MinSize="64 64">
     <PanelContainer HorizontalAlignment="Right" VerticalAlignment="Top">

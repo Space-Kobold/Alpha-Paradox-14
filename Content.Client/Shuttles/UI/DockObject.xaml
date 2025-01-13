@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
 <controls:PanelContainer HorizontalExpand="True"
                          xmlns:controls="https://spacestation14.io"
                          Margin="0 3">

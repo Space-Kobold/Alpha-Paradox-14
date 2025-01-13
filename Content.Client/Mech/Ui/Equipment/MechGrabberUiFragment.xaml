@@ -1,4 +1,10 @@
-﻿<equipment:MechGrabberUiFragment
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<equipment:MechGrabberUiFragment
     xmlns:equipment="clr-namespace:Content.Client.Mech.Ui.Equipment"
     xmlns="https://spacestation14.io" Margin="1 0 2 0" HorizontalExpand="True" VerticalExpand="True">
     <BoxContainer Orientation="Vertical"

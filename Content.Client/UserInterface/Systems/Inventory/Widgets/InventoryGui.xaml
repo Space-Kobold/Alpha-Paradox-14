@@ -1,4 +1,10 @@
-﻿<widgets:InventoryGui
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<widgets:InventoryGui
     xmlns="https://spacestation14.io"
     xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Widgets"

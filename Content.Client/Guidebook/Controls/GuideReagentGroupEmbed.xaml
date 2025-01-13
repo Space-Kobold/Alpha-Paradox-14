@@ -1,4 +1,10 @@
-﻿<BoxContainer xmlns="https://spacestation14.io"
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<BoxContainer xmlns="https://spacestation14.io"
               Orientation="Vertical">
     <BoxContainer Name="GroupContainer" Orientation="Vertical"/>
 </BoxContainer>

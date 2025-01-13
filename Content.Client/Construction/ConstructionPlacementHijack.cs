@@ -1,4 +1,8 @@
-﻿using System.Linq;
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
+using System.Linq;
 using Content.Shared.Construction.Prototypes;
 using Robust.Client.Placement;
 using Robust.Client.Utility;

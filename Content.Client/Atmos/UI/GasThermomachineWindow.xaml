@@ -1,4 +1,10 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+-->
+
+<DefaultWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                MinSize="300 120" Title="{Loc comp-gas-thermomachine-ui-title-freezer}">
     <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">

@@ -1,4 +1,8 @@
-﻿using Content.Client.UserInterface.Systems.Chat;
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
+using Content.Client.UserInterface.Systems.Chat;
 using Content.Shared.Chat;
 using Robust.Client.Replays.Commands;
 using Robust.Client.Replays.UI;
