@@ -1,4 +1,8 @@
-﻿namespace Content.Server.Electrocution;
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
+namespace Content.Server.Electrocution;
 
 /// <summary>
 /// Component for virtual electrocution entities (representing an in-progress shock).

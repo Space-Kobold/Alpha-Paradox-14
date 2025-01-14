@@ -1,4 +1,8 @@
-﻿using Content.Server.DeviceLinking.Components;
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
+using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceLinking.Components.Overload;
 using Content.Server.DeviceLinking.Events;
 using Robust.Server.Audio;

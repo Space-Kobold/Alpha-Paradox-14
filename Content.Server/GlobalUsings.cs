@@ -1,4 +1,8 @@
-﻿// Global usings for Content.Server
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
+// Global usings for Content.Server
 
 global using System;
 global using System.Collections.Generic;
