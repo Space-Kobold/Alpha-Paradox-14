@@ -153,7 +153,7 @@ namespace Content.Shared.Chemistry.Components
             AddReagent(new ReagentId(prototype, data), quantity);
         }
 
-        public Solution(IEnumerable<ReagentQuantity> reagents, bool setMaxVol = true)
+        public Solution(IEnumerable<ReagentQuantity> reagents, bool setMaxVol = true, IPrototypeManager? prototypeManager = null)
         {
             Contents = new(reagents);
             Volume = FixedPoint2.Zero;
@@ -165,10 +165,10 @@ namespace Content.Shared.Chemistry.Components
             if (setMaxVol)
                 MaxVolume = Volume;
 
-            ValidateSolution();
+            ValidateSolution(prototypeManager);
         }
 
-        public Solution(Solution solution)
+        public Solution(Solution solution, IPrototypeManager? prototypeManager = null)
         {
             Contents = solution.Contents.ShallowClone();
             Volume = solution.Volume;
@@ -177,7 +177,7 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity = solution._heatCapacity;
             _heatCapacityDirty = solution._heatCapacityDirty;
             _heatCapacityUpdateCounter = solution._heatCapacityUpdateCounter;
-            ValidateSolution();
+            ValidateSolution(prototypeManager);
         }
 
         public Solution Clone()
@@ -186,7 +186,7 @@ namespace Content.Shared.Chemistry.Components
         }
 
         [AssertionMethod]
-        public void ValidateSolution()
+        public void ValidateSolution(IPrototypeManager? prototypeManager = null)
         {
             // sandbox forbids: [Conditional("DEBUG")]
     #if DEBUG
@@ -204,7 +204,7 @@ namespace Content.Shared.Chemistry.Components
             {
                 var cur = _heatCapacity;
                 _heatCapacityDirty = true;
-                UpdateHeatCapacity(null);
+                UpdateHeatCapacity(prototypeManager);
                 DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur, tolerance: 0.01));
             }
     #endif
