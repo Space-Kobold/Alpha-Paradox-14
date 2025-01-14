@@ -17,9 +17,9 @@ using ReactiveReagentEffectEntry = Content.Shared.Chemistry.Reagent.ReactiveReag
 namespace Content.Shared._APCore.Chemistry.Registry;
 
 [DataDefinition, Virtual, Serializable, NetSerializable]
-public partial class ReagentDefinition
+public partial class ReagentDefinition : IEquatable<ReagentDefinition>
 {
-    [DataField]
+    [DataField(required: true)]
     public string Id { get; private set; } = default!;
 
     [DataField(required: true)]
@@ -129,4 +129,18 @@ public partial class ReagentDefinition
 
     [DataField(serverOnly: true)][NonSerialized]
     public Dictionary<ProtoId<ReactiveGroupPrototype>, ReactiveReagentEffectEntry>? ReactiveEffects;
+
+
+    public bool Equals(ReagentDefinition? other)
+    {
+        if (other == null)
+            return false;
+        return Id == other.Id;
+    }
+
+    public override int GetHashCode()
+    {
+        // ReSharper disable once NonReadonlyMemberInGetHashCode
+        return Id.GetHashCode();
+    }
 }
