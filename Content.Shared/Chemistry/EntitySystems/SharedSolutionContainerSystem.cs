@@ -16,6 +16,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
@@ -82,12 +83,26 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
         SubscribeLocalEvent<SolutionContainerManagerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnHandleSolutionState);
+        SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnGetSolutionState);
 
         if (NetManager.IsServer)
         {
             SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentShutdown>(OnContainerManagerShutdown);
             SubscribeLocalEvent<ContainedSolutionComponent, ComponentShutdown>(OnContainedSolutionShutdown);
         }
+    }
+
+    private void OnGetSolutionState(Entity<SolutionComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new SolutionComponentState(new Solution(ent.Comp.Solution, PrototypeManager));
+    }
+
+    private void OnHandleSolutionState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not SolutionComponentState solutionState)
+            return;
+        ent.Comp.Solution = new Solution(solutionState.Solution, PrototypeManager);
     }
 
 
