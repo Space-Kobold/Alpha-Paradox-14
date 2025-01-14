@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
 using Content.Shared.Random;
 using Content.Shared.Random.Rules;
 using Robust.Shared.Audio;

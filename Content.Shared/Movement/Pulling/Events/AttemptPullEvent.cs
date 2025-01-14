@@ -1,4 +1,8 @@
-﻿using Robust.Shared.Physics.Components;
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Movement.Pulling.Events;
 
