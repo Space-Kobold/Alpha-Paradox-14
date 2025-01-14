@@ -23,21 +23,24 @@ namespace Content.Shared.Entry
         [Dependency] private readonly IResourceManager _resMan = default!;
 
         private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
-
+        private readonly _APCore.Entrypoint _apEntry = new();
         public override void PreInit()
         {
             IoCManager.InjectDependencies(this);
             SharedContentIoC.Register();
+            _apEntry.PreInit();
         }
 
         public override void Shutdown()
         {
             _prototypeManager.PrototypesReloaded -= PrototypeReload;
+            _apEntry.Shutdown();
         }
 
         public override void Init()
         {
             IgnorePrototypes();
+            _apEntry.Init();
         }
 
         public override void PostInit()
@@ -53,6 +56,7 @@ namespace Content.Shared.Entry
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
             configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
 #endif
+            _apEntry.PostInit();
         }
 
         private void InitTileDefinitions()
