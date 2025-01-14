@@ -103,17 +103,17 @@ public sealed class EntProtoCache
         _reloading = false;
     }
 
-    public void SubscribeEntityPrototypeReloaded(Action<EntPrototypesReloadedArgs> onReloaded, params Type[] componentTypes)
+    public void SubscribeEntityPrototypeWithCompsReloaded(Action<EntPrototypesReloadedArgs> onReloaded, params Type[] componentTypes)
     {
         var key = new ReloadListenerKey(componentTypes);
         if (!_reloadListeners.TryAdd(key, onReloaded))
             _reloadListeners[key] += onReloaded;
     }
 
-    public void SubscribeEntityPrototypeReloaded<T>(Action<EntPrototypesReloadedArgs> onReloaded)
+    public void SubscribeEntityPrototypeWithCompReloaded<T>(Action<EntPrototypesReloadedArgs> onReloaded)
     where T: Component, new()
     {
-        SubscribeEntityPrototypeReloaded(onReloaded, typeof(T));
+        SubscribeEntityPrototypeWithCompsReloaded(onReloaded, typeof(T));
     }
 
     private bool TryIndexEntProto(string protoId, Type wantedType, out EntityPrototype data)
@@ -167,7 +167,7 @@ public sealed class EntProtoCache
         }
     }
 
-    public (EntityPrototype Proto, T Comp) IndexEntProtoWithCompData<T>(string protoId)
+    public (EntityPrototype Proto, T Comp) IndexEntProtoWithComp<T>(string protoId)
         where T : Component, new()
     {
         if (!TryIndexEntProtoComp(protoId, typeof(T), out var data))
@@ -175,7 +175,7 @@ public sealed class EntProtoCache
         return (data.Proto, (T)data.Comp);
     }
 
-    public EntityPrototype IndexEntProtoWithComp<T>(string protoId)
+    public EntityPrototype IndexEntProto<T>(string protoId)
         where T : Component, new()
     {
         if (!TryIndexEntProto(protoId, typeof(T), out var proto))
@@ -183,7 +183,7 @@ public sealed class EntProtoCache
         return proto;
     }
 
-    public IEnumerable<EntityPrototype> EnumerateEntPrototypesWithComp<T>()
+    public IEnumerable<EntityPrototype> EnumerateEntPrototypes<T>()
         where T: Component, new()
     {
         foreach (var (proto, _) in EnumerateEntPrototypes(typeof(T)))
@@ -192,7 +192,7 @@ public sealed class EntProtoCache
         }
     }
 
-    public IEnumerator<(EntityPrototype Proto, T Comp)> EnumerateEntPrototypesWithCompData<T>()
+    public IEnumerable<(EntityPrototype Proto, T Comp)> EnumerateEntPrototypesWithComp<T>()
         where T: Component, new()
     {
         foreach (var (proto, entry) in EnumerateEntPrototypes(typeof(T)))

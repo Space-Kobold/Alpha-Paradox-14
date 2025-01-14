@@ -28,7 +28,7 @@ namespace Content.Shared.Chemistry.Reagent
         public string ID { get; private set; } = default!;
 
         [DataField(required: true)]
-        private LocId Name { get; set; }
+        public LocId Name { get; set; }
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
@@ -44,13 +44,13 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Abstract { get; private set; }
 
         [DataField("desc", required: true)]
-        private LocId Description { get; set; }
+        public LocId Description { get; set; }
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedDescription => Loc.GetString(Description);
 
         [DataField("physicalDesc", required: true)]
-        private LocId PhysicalDescription { get; set; } = default!;
+        public LocId PhysicalDescription { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);

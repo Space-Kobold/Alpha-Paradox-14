@@ -11,7 +11,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._APCore.Chemistry.Registry;
 
-[DataDefinition] [Virtual] [Serializable] [NetSerializable]
+[DataDefinition, Virtual, Serializable,NetSerializable]
 public partial class ReactionDefinition: IComparable<ReactionDefinition>
 {
     [DataField]

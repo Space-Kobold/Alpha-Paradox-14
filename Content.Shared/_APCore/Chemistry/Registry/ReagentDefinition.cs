@@ -16,14 +16,14 @@ using ReactiveReagentEffectEntry = Content.Shared.Chemistry.Reagent.ReactiveReag
 
 namespace Content.Shared._APCore.Chemistry.Registry;
 
-[DataDefinition] [Virtual] [Serializable] [NetSerializable]
+[DataDefinition, Virtual, Serializable, NetSerializable]
 public partial class ReagentDefinition
 {
     [DataField]
     public string Id { get; private set; } = default!;
 
     [DataField(required: true)]
-    private LocId Name { get; set; }
+    public LocId Name { get; set; }
 
     [ViewVariables(VVAccess.ReadOnly)]
     public string LocalizedName => Loc.GetString(Name);
@@ -32,7 +32,7 @@ public partial class ReagentDefinition
     public string Group { get; private set; } = "Unknown";
 
     [DataField("desc", required: true)]
-    private LocId Description { get; set; }
+    public LocId Description { get; set; }
 
     [ViewVariables(VVAccess.ReadOnly)]
     public string LocalizedDescription => Loc.GetString(Description);

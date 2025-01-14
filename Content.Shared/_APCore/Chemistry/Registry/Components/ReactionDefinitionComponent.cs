@@ -5,6 +5,6 @@ namespace Content.Shared._APCore.Chemistry.Registry.Components;
 [RegisterComponent]
 public sealed partial class ReactionDefinitionComponent : Component
 {
-    // [IncludeDataField]
-    // public ReactionDefinition Definition;
+    [IncludeDataField]
+    public ReactionDefinition Definition;
 }
