@@ -1,18 +1,22 @@
+# SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+#
+# SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
 - name: Articles
   href: articles/
-  
-# Client 
-- name: Content.Client 
+
+# Client
+- name: Content.Client
   href: api/Content.Client/
 
 # Server
 - name: Content.Server
   href: api/Content.Server/
 
-# Shared 
+# Shared
 - name: Content.Shared
   href: api/Content.Shared/
-  
+
 # Unit testing
 - name: Content.Tests
   href: api/Content.Tests/

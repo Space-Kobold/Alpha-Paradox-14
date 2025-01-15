@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+
+SPDX-License-Identifier: CC-BY-SA-3.0
+-->
+
 # Space Station 14 DocFX
 ![](https://i.imgur.com/0h6VoRZ.png)
 

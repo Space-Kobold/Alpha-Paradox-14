@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+ * SPDX-FileCopyrightText: 2019-2021 Steffen Wilke and Contributors <https://github.com/steffen-wilke/darkfx>
+ *
+ * SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards AND LicenseRef-MIT-DarkFX
+ */
+
 :root, body.dark-theme {
   --color-foreground: #ccd5dc;
   --color-navbar: #66666d;
@@ -377,7 +384,7 @@ blockquote {
   height: 20px;
 }
 
-.switch input { 
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;

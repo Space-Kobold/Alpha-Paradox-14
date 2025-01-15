@@ -1,4 +1,13 @@
-{{!Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE file in the project root for full license information.}}
+{{#comment}}
+SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+SPDX-FileCopyrightText: 2019-2021 Steffen Wilke and Contributors <https://github.com/steffen-wilke/darkfx>
+SPDX-FileCopyrightText: 2015-2025 .NET Foundation and Contributors <https://github.com/dotnet/docfx>
+SPDX-FileCopyrightText: Microsoft
+
+SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards AND LicenseRef-MIT-DarkFX AND LicenseRef-MIT-DotNet
+{{/comment}}
+
+{{!PRESERVED ATTRIBUTION: Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE file in the project root for full license information.}}
 
 <h1 id="{{id}}" data-uid="{{uid}}" class="text-break">{{>partials/title}}</h1>
 <div class="markdown level0 summary">{{{summary}}}</div>

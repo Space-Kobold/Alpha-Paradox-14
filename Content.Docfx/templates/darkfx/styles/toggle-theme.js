@@ -1,3 +1,9 @@
+// SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+// SPDX-FileCopyrightText: 2019-2021 Steffen Wilke and Contributors <https://github.com/steffen-wilke/darkfx>
+//
+// SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards AND LicenseRef-MIT-DarkFX
+
+
 const sw = document.getElementById("switch-style"), sw_mobile = document.getElementById("switch-style-m"), b = document.body;
 if (b) {
   function toggleTheme(target, dark) {
@@ -20,7 +26,7 @@ if (b) {
 
     sw.addEventListener("change", switchEventListener);
     sw_mobile.addEventListener("change", switchEventListener);
-    
+
     // sync state between switches
     sw.addEventListener("change", function() {
       sw_mobile.checked = this.checked;
