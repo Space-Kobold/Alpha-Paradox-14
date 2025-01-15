@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+#
+# SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
 #
 # Updates an RSS file on a remote server with updates to the changelog.
 # See https://docs.spacestation14.io/en/hosting/changelogs for instructions.

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+#
+# SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
 #
 # Sends updates to a Discord webhook for new changelog entries since the last GitHub Actions publish run.
 # Automatically figures out the last run and changelog contents with the GitHub API.

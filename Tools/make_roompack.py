@@ -1,4 +1,9 @@
 #!/usr/bin/python
+
+# SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+#
+# SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
 # Analyze the rectangular bounding boxes in a greyscale bitmap to create
 # dungeon room pack configs.
 

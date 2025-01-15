@@ -1,5 +1,9 @@
 #!/usr/bin/env pwsh
 
+# SPDX-FileCopyrightText: 2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>
+#
+# SPDX-License-Identifier: LicenseRef-MIT-SpaceWizards
+
 $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 . $(join-path $scriptDir contribs_shared.ps1)
 

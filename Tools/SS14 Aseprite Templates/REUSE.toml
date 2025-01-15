@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2025 Space Kobold Games and Contributors <https://github.com/space-kobold/alpha-paradox>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+version = 1
+
+[[annotations]]
+path = [
+    "IconSmoothingTemplate README.txt",
+    "IconSmoothingTemplate.aseprite",
+]
+SPDX-FileCopyrightText = "2017-2025 Space Wizards Federation and Contributors <https://github.com/space-wizards/space-station-14>"
+SPDX-License-Identifier = "CC-BY-SA-3.0"
