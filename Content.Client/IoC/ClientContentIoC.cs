@@ -1,3 +1,4 @@
+using Content.Client._APCore.Anticheat;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -59,6 +60,8 @@ namespace Content.Client.IoC
             collection.Register<PlayerRateLimitManager>();
             collection.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             collection.Register<TitleWindowManager>();
+
+            collection.Register<SS14AC>();
         }
     }
 }

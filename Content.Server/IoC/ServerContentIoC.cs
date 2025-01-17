@@ -1,3 +1,4 @@
+using Content.Server._APCore.Anticheat;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -75,6 +76,8 @@ namespace Content.Server.IoC
             IoCManager.Register<MappingManager>();
             IoCManager.Register<IWatchlistWebhookManager, WatchlistWebhookManager>();
             IoCManager.Register<ConnectionManager>();
+
+            IoCManager.Register<SS14ACManager>();
         }
     }
 }
