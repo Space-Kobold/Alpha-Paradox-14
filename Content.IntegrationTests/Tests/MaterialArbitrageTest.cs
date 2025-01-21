@@ -5,6 +5,7 @@ using Content.Server.Construction.Components;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Stack;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
@@ -46,6 +47,7 @@ public sealed class MaterialArbitrageTest
         var mapSystem = server.System<SharedMapSystem>();
         var latheSys = server.System<SharedLatheSystem>();
         var compFact = server.ResolveDependency<IComponentFactory>();
+        var chemRegistry = entManager.System<ChemRegistrySystem>();
 
         Assert.That(mapSystem.IsInitialized(testMap.MapId));
 
@@ -394,8 +396,8 @@ public sealed class MaterialArbitrageTest
             double price = 0;
             foreach (var (id, num) in mats)
             {
-                var reagentProto = protoManager.Index<ReagentPrototype>(id);
-                price += num.Double() * reagentProto.PricePerUnit;
+                var reagent = chemRegistry.IndexReagent(id);
+                price += num.Double() * reagent.PricePerUnit;
             }
             return price;
         }

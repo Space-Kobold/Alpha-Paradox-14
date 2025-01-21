@@ -17,6 +17,9 @@ public partial class ReactionDefinition: IComparable<ReactionDefinition>
     [DataField]
     public string Id { get; private set; } = default!;
 
+    [Obsolete("Use Id, this is for backwards compatibility")]
+    public string ID => Id;
+
     [DataField]
     public string Name { get; private set; } = string.Empty;
 

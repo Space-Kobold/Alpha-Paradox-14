@@ -11,6 +11,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -24,6 +25,9 @@ namespace Content.Client.Chemistry.UI
     public sealed partial class ChemMasterWindow : FancyWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly EntityManager _entityManager = default!;
+
+        private ChemRegistrySystem _chemRegistry;
         public event Action<BaseButton.ButtonEventArgs, ReagentButton>? OnReagentButtonPressed;
         public readonly Button[] PillTypeButtons;
 
@@ -37,7 +41,7 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-
+            _chemRegistry = _entityManager.System<ChemRegistrySystem>();
             // Pill type selection buttons, in total there are 20 pills.
             // Pill rsi file should have states named as pill1, pill2, and so on.
             var resourcePath = new ResPath(PillsRsiPath);
@@ -140,17 +144,17 @@ namespace Content.Client.Chemistry.UI
 
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
-    
+
             BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
-    
+
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
             CreateBottleButton.Disabled = castState.OutputContainerInfo?.Reagents == null;
             CreatePillButton.Disabled = castState.OutputContainerInfo?.Entities == null;
-            
+
             UpdateDosageFields(castState);
         }
-        
+
         //assign default values for pill and bottle fields.
         private void UpdateDosageFields(ChemMasterBoundUserInterfaceState castState)
         {
@@ -162,7 +166,7 @@ namespace Content.Client.Chemistry.UI
             var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
 
             PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
-            
+
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
             PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
@@ -195,7 +199,7 @@ namespace Content.Client.Chemistry.UI
                 return "";
 
             var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent;
-            _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
+            _chemRegistry.TryIndexReagent(reagent.Prototype, out var proto);
             return proto?.LocalizedName ?? "";
         }
 
@@ -241,13 +245,13 @@ namespace Content.Client.Chemistry.UI
             foreach (var (reagent, quantity) in state.BufferReagents)
             {
                 var reagentId = reagent;
-                _prototypeManager.TryIndex(reagentId.Prototype, out ReagentPrototype? proto);
+                _chemRegistry.TryIndexReagent(reagent.Prototype, out var proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                 var reagentColor = proto?.SubstanceColor ?? default(Color);
                 BufferInfo.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagentId, quantity, true, true));
             }
         }
-        
+
         private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)
         {
             control.Children.Clear();
@@ -292,10 +296,10 @@ namespace Content.Client.Chemistry.UI
             {
                 foreach (var reagent in info.Reagents)
                 {
-                    _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto);
+                    _chemRegistry.TryIndexReagent(reagent.Reagent.Prototype, out var proto);
                     var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                     var reagentColor = proto?.SubstanceColor ?? default(Color);
-        
+
                     control.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagent.Reagent, reagent.Quantity, false, addReagentButtons));
                 }
             }
@@ -315,7 +319,7 @@ namespace Content.Client.Chemistry.UI
             }
             //this calls the separated button builder, and stores the return to render after labels
             var reagentButtonConstructors = CreateReagentTransferButtons(reagent, isBuffer, addReagentButtons);
-            
+
             // Create the row layout with the color panel
             var rowContainer = new BoxContainer
             {
@@ -358,7 +362,7 @@ namespace Content.Client.Chemistry.UI
                 Children = { rowContainer }
             };
         }
-        
+
         public string LabelLine
         {
             get => LabelLineEdit.Text;

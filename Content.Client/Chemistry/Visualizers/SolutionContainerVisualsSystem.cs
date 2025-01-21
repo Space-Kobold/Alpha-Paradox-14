@@ -1,4 +1,5 @@
 using Content.Client.Items.Systems;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -16,6 +17,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
 
     public override void Initialize()
     {
@@ -76,17 +78,16 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                         out var baseOverride,
                         args.Component))
                 {
-                    _prototype.TryIndex<ReagentPrototype>(baseOverride, out var reagentProto);
-
-                    if (reagentProto?.MetamorphicSprite is { } sprite)
+                    if (_chemRegistry.TryIndexReagent(baseOverride, out var reagent)
+                        && reagent.MetamorphicSprite is { } sprite)
                     {
                         args.Sprite.LayerSetSprite(baseLayer, sprite);
-                        if (reagentProto.MetamorphicMaxFillLevels > 0)
+                        if (reagent.MetamorphicMaxFillLevels > 0)
                         {
                             args.Sprite.LayerSetVisible(fillLayer, true);
-                            maxFillLevels = reagentProto.MetamorphicMaxFillLevels;
-                            fillBaseName = reagentProto.MetamorphicFillBaseName;
-                            changeColor = reagentProto.MetamorphicChangeColor;
+                            maxFillLevels = reagent.MetamorphicMaxFillLevels;
+                            fillBaseName = reagent.MetamorphicFillBaseName;
+                            changeColor = reagent.MetamorphicChangeColor;
                             fillSprite = sprite;
                         }
                         else

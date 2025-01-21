@@ -15,6 +15,11 @@ public sealed partial class ChemRegistrySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private Entity<ChemRegistryComponent>? _cachedRegistry;
+
+    protected Entity<ChemRegistryComponent> RegistryEntity => EnsureRegistry();
+    protected ChemRegistryComponent Registry => EnsureRegistry().Comp;
+    protected Dictionary<string, ReagentDefinition> Reagents => Registry.Reagents;
+    protected Dictionary<string, ReactionDefinition> Reactions => Registry.Reactions;
     public override void Initialize()
     {
         _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;

@@ -22,6 +22,9 @@ public partial class ReagentDefinition : IEquatable<ReagentDefinition>
     [DataField(required: true)]
     public string Id { get; private set; } = default!;
 
+    [Obsolete("Use Id, this is for backwards compatibility")]
+    public string ID => Id;
+
     [DataField(required: true)]
     public LocId Name { get; set; }
 

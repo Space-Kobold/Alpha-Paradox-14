@@ -6,6 +6,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 
 namespace Content.Server.Administration.Commands
 {
@@ -43,6 +44,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var solutionContainerSystem = _entManager.System<SharedSolutionContainerSystem>();
+            var chemRegistry = _entManager.System<ChemRegistrySystem>();
             if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution))
             {
                 var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
@@ -50,7 +52,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_protomanager.HasIndex<ReagentPrototype>(args[2]))
+            if (!chemRegistry.ReagentIsDefined(args[2]))
             {
                 shell.WriteLine($"Unknown reagent prototype");
                 return;

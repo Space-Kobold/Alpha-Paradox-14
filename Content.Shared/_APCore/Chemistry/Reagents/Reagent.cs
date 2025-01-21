@@ -2,9 +2,45 @@
 // SPDX-License-Identifier: MPL-2.0-no-copyleft-exception
 
 using Content.Shared._APCore.Chemistry.Registry;
-using Content.Shared._APCore.Chemistry.Registry.Systems;
+using Robust.Shared.Serialization;
+using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Shared._APCore.Chemistry.Reagents;
+
+[Serializable, NetSerializable]
+public partial record struct ReagentId(string Id)
+    : IEquatable<string>, IComparable<ReagentId>, IAsType<string>
+{
+    public static implicit operator string(ReagentId protoId)
+    {
+        return protoId.Id;
+    }
+
+    public static implicit operator ReagentId(string id)
+    {
+        return new ReagentId(id);
+    }
+
+    public static implicit operator ReagentId?(string? id)
+    {
+        return id == null ? default(ReagentId?) : new ReagentId(id);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Id == other;
+    }
+
+    public int CompareTo(ReagentId other)
+    {
+        return string.Compare(Id, other.Id, StringComparison.Ordinal);
+    }
+
+    public string AsType() => Id;
+
+    public override string ToString() => Id ?? string.Empty;
+}
+
 public interface IReagent
 {
 };

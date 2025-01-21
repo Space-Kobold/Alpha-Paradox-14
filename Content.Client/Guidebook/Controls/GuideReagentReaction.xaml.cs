@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
+using Content.Shared._APCore.Chemistry.Registry;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
@@ -25,20 +27,23 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
     private const string DefaultMixingCategory = "DummyMix";
 
     private readonly IPrototypeManager _protoMan;
+    private readonly ChemRegistrySystem _chemRegistry;
 
-    public GuideReagentReaction(IPrototypeManager protoMan)
+    public GuideReagentReaction(IPrototypeManager protoMan, ChemRegistrySystem chemRegistry)
     {
         RobustXamlLoader.Load(this);
         _protoMan = protoMan;
+        _chemRegistry = chemRegistry;
     }
 
-    public GuideReagentReaction(ReactionPrototype prototype, IPrototypeManager protoMan, IEntitySystemManager sysMan) : this(protoMan)
+    public GuideReagentReaction(ReactionDefinition reaction, IPrototypeManager protoMan, IEntitySystemManager sysMan)
+        : this(protoMan, sysMan.GetEntitySystem<ChemRegistrySystem>())
     {
         var reactantsLabel = ReactantsLabel;
-        SetReagents(prototype.Reactants, ref reactantsLabel, protoMan);
+        SetReagents(reaction.Reactants, ref reactantsLabel, protoMan);
         var productLabel = ProductsLabel;
-        var products = new Dictionary<string, FixedPoint2>(prototype.Products);
-        foreach (var (reagent, reactantProto) in prototype.Reactants)
+        var products = new Dictionary<string, FixedPoint2>(reaction.Products);
+        foreach (var (reagent, reactantProto) in reaction.Reactants)
         {
             if (reactantProto.Catalyst)
                 products.Add(reagent, reactantProto.Amount);
@@ -46,9 +51,9 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
         SetReagents(products, ref productLabel, protoMan);
 
         var mixingCategories = new List<MixingCategoryPrototype>();
-        if (prototype.MixingCategories != null)
+        if (reaction.MixingCategories != null)
         {
-            foreach (var category in prototype.MixingCategories)
+            foreach (var category in reaction.MixingCategories)
             {
                 mixingCategories.Add(protoMan.Index(category));
             }
@@ -57,14 +62,14 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
         {
             mixingCategories.Add(protoMan.Index<MixingCategoryPrototype>(DefaultMixingCategory));
         }
-        SetMixingCategory(mixingCategories, prototype, sysMan);
+        SetMixingCategory(mixingCategories, reaction, sysMan);
     }
 
     public GuideReagentReaction(EntityPrototype prototype,
         Solution solution,
         IReadOnlyList<ProtoId<MixingCategoryPrototype>> categories,
         IPrototypeManager protoMan,
-        IEntitySystemManager sysMan) : this(protoMan)
+        IEntitySystemManager sysMan) : this(protoMan, sysMan.GetEntitySystem<ChemRegistrySystem>())
     {
         var icon = sysMan.GetEntitySystem<SpriteSystem>().GetPrototypeIcon(prototype).GetFrame(RsiDirection.South, 0);
         var entContainer = new BoxContainer
@@ -93,7 +98,7 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
     public GuideReagentReaction(GasPrototype prototype,
         IReadOnlyList<ProtoId<MixingCategoryPrototype>> categories,
         IPrototypeManager protoMan,
-        IEntitySystemManager sysMan) : this(protoMan)
+        IEntitySystemManager sysMan) : this(protoMan, sysMan.GetEntitySystem<ChemRegistrySystem>())
     {
         ReactantsLabel.Visible = true;
         ReactantsLabel.SetMarkup(Loc.GetString("guidebook-reagent-sources-gas-wrapper",
@@ -122,7 +127,7 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
     }
 
     private void SetReagents(
-        Dictionary<string, ReactantPrototype> reactants,
+        Dictionary<string, ReactionDefinition.Reactant> reactants,
         ref RichTextLabel label,
         IPrototypeManager protoMan)
     {
@@ -156,7 +161,8 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
         foreach (var (product, amount) in reagents.OrderByDescending(p => p.Value))
         {
             msg.AddMarkupOrThrow(Loc.GetString("guidebook-reagent-recipes-reagent-display",
-                ("reagent", protoMan.Index<ReagentPrototype>(product).LocalizedName), ("ratio", amount)));
+                ("reagent", _chemRegistry.IndexReagent(product).LocalizedName),
+                ("ratio", amount)));
             i++;
             if (i < reagentCount)
                 msg.PushNewline();
@@ -166,17 +172,22 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
         label.Visible = true;
     }
 
-    private void SetMixingCategory(IReadOnlyList<ProtoId<MixingCategoryPrototype>> mixingCategories, ReactionPrototype? prototype, IEntitySystemManager sysMan)
+    private void SetMixingCategory(
+        IReadOnlyList<ProtoId<MixingCategoryPrototype>> mixingCategories,
+        ReactionDefinition? reaction,
+        IEntitySystemManager sysMan)
     {
         var foo = new List<MixingCategoryPrototype>();
         foreach (var cat in mixingCategories)
         {
             foo.Add(_protoMan.Index(cat));
         }
-        SetMixingCategory(foo, prototype, sysMan);
+        SetMixingCategory(foo, reaction, sysMan);
     }
 
-    private void SetMixingCategory(IReadOnlyList<MixingCategoryPrototype> mixingCategories, ReactionPrototype? prototype, IEntitySystemManager sysMan)
+    private void SetMixingCategory(IReadOnlyList<MixingCategoryPrototype> mixingCategories,
+        ReactionDefinition? reaction,
+        IEntitySystemManager sysMan)
     {
         if (mixingCategories.Count == 0)
             return;
@@ -190,8 +201,8 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
         var mixingVerb = ContentLocalizationManager.FormatList(mixingCategories
             .Select(p => Loc.GetString(p.VerbText)).ToList());
 
-        var minTemp = prototype?.MinimumTemperature ?? 0;
-        var maxTemp = prototype?.MaximumTemperature ?? float.PositiveInfinity;
+        var minTemp = reaction?.MinimumTemperature ?? 0;
+        var maxTemp = reaction?.MaximumTemperature ?? float.PositiveInfinity;
         var text = Loc.GetString("guidebook-reagent-recipes-mix-info",
             ("verb", mixingVerb),
             ("minTemp", minTemp),

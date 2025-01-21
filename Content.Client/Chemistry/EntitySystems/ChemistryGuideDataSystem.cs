@@ -1,4 +1,7 @@
 ﻿using System.Linq;
+using Content.Shared._APCore.Chemistry.Registry;
+using Content.Shared._APCore.Chemistry.Registry.Components;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Body.Part;
@@ -17,6 +20,7 @@ namespace Content.Client.Chemistry.EntitySystems;
 public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
 
     [ValidatePrototypeId<MixingCategoryPrototype>]
     private const string DefaultMixingCategory = "DummyMix";
@@ -57,9 +61,9 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
     {
         // this doesn't check what prototypes are being reloaded because, to be frank, we use a lot of them.
         _reagentSources.Clear();
-        foreach (var reagent in PrototypeManager.EnumeratePrototypes<ReagentPrototype>())
+        foreach (var reagent in _chemRegistry.EnumerateReagents())
         {
-            _reagentSources.Add(reagent.ID, new());
+            _reagentSources.Add(reagent.Id, new());
         }
 
         foreach (var reaction in PrototypeManager.EnumeratePrototypes<ReactionPrototype>())
@@ -195,13 +199,13 @@ public sealed class ReagentEntitySourceData : ReagentSourceData
 /// </summary>
 public sealed class ReagentReactionSourceData : ReagentSourceData
 {
-    public readonly ReactionPrototype ReactionPrototype;
+    public readonly ReactionDefinition ReactionPrototype;
 
     public override int OutputCount => ReactionPrototype.Products.Count + ReactionPrototype.Reactants.Count(r => r.Value.Catalyst);
 
     public override string IdentifierString => ReactionPrototype.ID;
 
-    public ReagentReactionSourceData(List<ProtoId<MixingCategoryPrototype>> mixingType, ReactionPrototype reactionPrototype)
+    public ReagentReactionSourceData(List<ProtoId<MixingCategoryPrototype>> mixingType, ReactionDefinition reactionPrototype)
         : base(mixingType)
     {
         ReactionPrototype = reactionPrototype;

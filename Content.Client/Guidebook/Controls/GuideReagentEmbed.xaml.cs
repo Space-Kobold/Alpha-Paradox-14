@@ -4,6 +4,8 @@ using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Guidebook.Richtext;
 using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
+using Content.Shared._APCore.Chemistry.Registry;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -28,21 +30,23 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private readonly ChemistryGuideDataSystem _chemistryGuideData;
+    private readonly ChemRegistrySystem _chemRegistry;
 
     public GuideReagentEmbed()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _chemistryGuideData = _systemManager.GetEntitySystem<ChemistryGuideDataSystem>();
+        _chemRegistry = _systemManager.GetEntitySystem<ChemRegistrySystem>();
         MouseFilter = MouseFilterMode.Stop;
     }
 
     public GuideReagentEmbed(string reagent) : this()
     {
-        GenerateControl(_prototype.Index<ReagentPrototype>(reagent));
+        GenerateControl(_chemRegistry.IndexReagent(reagent));
     }
 
-    public GuideReagentEmbed(ReagentPrototype reagent) : this()
+    public GuideReagentEmbed(ReagentDefinition reagent) : this()
     {
         GenerateControl(reagent);
     }
@@ -66,7 +70,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
             return false;
         }
 
-        if (!_prototype.TryIndex<ReagentPrototype>(id, out var reagent))
+        if (!_chemRegistry.TryIndexReagent(id, out var reagent))
         {
             Logger.Error($"Specified reagent prototype \"{id}\" is not a valid reagent prototype");
             return false;
@@ -78,7 +82,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         return true;
     }
 
-    private void GenerateControl(ReagentPrototype reagent)
+    private void GenerateControl(ReagentDefinition reagent)
     {
         NameBackground.PanelOverride = new StyleBoxFlat
         {
@@ -200,9 +204,9 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         ReagentDescription.SetMessage(description);
     }
 
-    private void GenerateSources(ReagentPrototype reagent)
+    private void GenerateSources(ReagentDefinition reagent)
     {
-        var sources = _chemistryGuideData.GetReagentSources(reagent.ID);
+        var sources = _chemistryGuideData.GetReagentSources(reagent.Id);
         if (sources.Count == 0)
         {
             SourcesContainer.Visible = false;
