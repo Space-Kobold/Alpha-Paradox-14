@@ -41,7 +41,7 @@ public sealed partial class ChemRegistrySystem : EntitySystem
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (!args.ByType.ContainsKey(typeof(EntityPrototype))
-            || !CheckLegacyReload(args))
+            || !CheckProtoReload(args))
             return;
         var chemReg = EnsureRegistry();
         ClearRegistry(false);
@@ -66,16 +66,14 @@ public sealed partial class ChemRegistrySystem : EntitySystem
     private void BuildRegistry(Entity<ChemRegistryComponent> chemReg, bool dirty = true)
     {
         Log.Debug($"Building Chem Registry, Ent:{ToPrettyString(chemReg)}");
-        foreach (var (_, defComp) in
-                 _entProtoCache.EnumerateEntPrototypesWithComp<ReagentDefinitionComponent>())
+        foreach (var reagent in EnumerateReagentPrototypes())
         {
-            chemReg.Comp.Reagents.Add(defComp.Definition.Id,defComp.Definition);
+            chemReg.Comp.Reagents.Add(reagent.Id, reagent);
         }
-        foreach (var (_, defComp) in _entProtoCache.EnumerateEntPrototypesWithComp<ReactionDefinitionComponent>())
+        foreach (var reaction in EnumerateReactionPrototypes())
         {
-            chemReg.Comp.Reactions.Add(defComp.Definition.Id,defComp.Definition);
+            chemReg.Comp.Reactions.Add(reaction.Id, reaction);
         }
-        BuildLegacyRegistry(chemReg);
         if (dirty)
             Dirty(chemReg);
     }
