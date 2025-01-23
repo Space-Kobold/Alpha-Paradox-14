@@ -1,3 +1,5 @@
+using Content.Shared._APCore.Chemistry.Registry;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
@@ -5,6 +7,7 @@ using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Server.EntityEffects.Effects
 {
@@ -14,8 +17,8 @@ namespace Content.Server.EntityEffects.Effects
         /// <summary>
         ///     The reagent ID to remove. Only one of this and <see cref="Group"/> should be active.
         /// </summary>
-        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
-        public string? Reagent = null;
+        [DataField]
+        public ReagentId? Reagent = null;
         // TODO use ReagentId
 
         /// <summary>
@@ -47,10 +50,11 @@ namespace Content.Server.EntityEffects.Effects
                 }
                 else if (Group != null)
                 {
-                    var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+                    var systemManager = IoCManager.Resolve<IEntitySystemManager>();
+                    var chemRegistry = systemManager.GetEntitySystem<ChemRegistrySystem>();
                     foreach (var quant in reagentArgs.Source.Contents.ToArray())
                     {
-                        var proto = prototypeMan.Index<ReagentPrototype>(quant.Reagent.Prototype);
+                        var proto = chemRegistry.IndexReagent(quant.Reagent.Prototype);
                         if (proto.Metabolisms != null && proto.Metabolisms.ContainsKey(Group))
                         {
                             if (amount < 0)
@@ -69,12 +73,13 @@ namespace Content.Server.EntityEffects.Effects
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
-            if (Reagent is not null && prototype.TryIndex(Reagent, out ReagentPrototype? reagentProto))
+            if (Reagent is not null &&
+                entSys.GetEntitySystem<ChemRegistrySystem>().TryIndexReagent(Reagent, out var reagent))
             {
                 return Loc.GetString("reagent-effect-guidebook-adjust-reagent-reagent",
                     ("chance", Probability),
                     ("deltasign", MathF.Sign(Amount.Float())),
-                    ("reagent", reagentProto.LocalizedName),
+                    ("reagent", reagent.LocalizedName),
                     ("amount", MathF.Abs(Amount.Float())));
             }
             else if (Group is not null && prototype.TryIndex(Group, out MetabolismGroupPrototype? groupProto))

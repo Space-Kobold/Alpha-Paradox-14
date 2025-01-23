@@ -1,7 +1,6 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Chemistry.Reaction;
 
@@ -30,13 +29,15 @@ public sealed partial class ReactiveReagentEffectEntry
     [DataField("methods")]
     public HashSet<ReactionMethod> Methods = default!;
 
-    [DataField("reagents", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
-    public HashSet<string>? Reagents = null;
+    [DataField("reagents")]
+    public HashSet<ReagentId>? Reagents = null;
 
     [DataField("effects", required: true)]
     public List<EntityEffect> Effects = default!;
 
-    [DataField("groups", readOnly: true, serverOnly: true,
+    [DataField("groups",
+        readOnly: true,
+        serverOnly: true,
         customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<ReactionMethod>, ReactiveGroupPrototype>))]
     public Dictionary<string, HashSet<ReactionMethod>>? ReactiveGroups { get; private set; }
 }

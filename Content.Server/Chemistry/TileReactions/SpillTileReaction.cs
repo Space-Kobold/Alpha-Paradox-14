@@ -1,4 +1,5 @@
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared._APCore.Chemistry.Registry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -27,7 +28,7 @@ namespace Content.Server.Chemistry.TileReactions
         [DataField("superSlippery")] private bool _superSlippery;
 
         public FixedPoint2 TileReact(TileRef tile,
-            ReagentPrototype reagent,
+            ReagentDefinition reagent,
             FixedPoint2 reactVolume,
             IEntityManager entityManager,
             List<ReagentData>? data)
@@ -36,7 +37,7 @@ namespace Content.Server.Chemistry.TileReactions
                 return FixedPoint2.Zero;
 
             if (entityManager.EntitySysManager.GetEntitySystem<PuddleSystem>()
-                .TrySpillAt(tile, new Solution(reagent.ID, reactVolume, data), out var puddleUid, false, false))
+                .TrySpillAt(tile, new Solution(reagent.Id, reactVolume, data), out var puddleUid, false, false))
             {
                 var slippery = entityManager.EnsureComponent<SlipperyComponent>(puddleUid);
                 slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;

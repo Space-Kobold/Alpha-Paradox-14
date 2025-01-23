@@ -22,7 +22,7 @@ public sealed partial class ChemRegistrySystem
         return false;
     }
 
-    public ReactionDefinition IndexReaction(ReagentId id)
+    public ReactionDefinition IndexReaction(string id)
     {
         return Reactions[id];
     }

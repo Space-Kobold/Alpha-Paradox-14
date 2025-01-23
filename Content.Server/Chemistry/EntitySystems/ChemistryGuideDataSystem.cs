@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry;
+﻿using Content.Shared._APCore.Chemistry.Registry.Systems;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -11,6 +12,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,7 +28,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
     private void InitializeServerRegistry()
     {
         var changeset = new ReagentGuideChangeset(new Dictionary<string, ReagentGuideEntry>(), new HashSet<string>());
-        foreach (var proto in PrototypeManager.EnumeratePrototypes<ReagentPrototype>())
+        foreach (var proto in _chemRegistry.EnumerateReagents())
         {
             var entry = new ReagentGuideEntry(proto, PrototypeManager, EntityManager.EntitySysManager);
             changeset.GuideEntries.Add(proto.ID, entry);
@@ -46,13 +48,13 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
         RaiseNetworkEvent(sendEv, e.Session);
     }
 
+
+    //TODO JEZI CHEM: Rewrite this
     private void PrototypeManagerReload(PrototypesReloadedEventArgs obj)
     {
         if (!obj.ByType.TryGetValue(typeof(ReagentPrototype), out var reagents))
             return;
-
         var changeset = new ReagentGuideChangeset(new Dictionary<string, ReagentGuideEntry>(), new HashSet<string>());
-
         foreach (var (id, proto) in reagents.Modified)
         {
             var reagentProto = (ReagentPrototype) proto;
@@ -60,7 +62,6 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             changeset.GuideEntries.Add(id, entry);
             Registry[id] = entry;
         }
-
         var ev = new ReagentGuideRegistryChangedEvent(changeset);
         RaiseNetworkEvent(ev);
     }

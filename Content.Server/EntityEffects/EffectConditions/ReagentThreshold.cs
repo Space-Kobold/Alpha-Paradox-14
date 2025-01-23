@@ -1,3 +1,5 @@
+using Content.Shared._APCore.Chemistry.Registry;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
@@ -43,11 +45,12 @@ public sealed partial class ReagentThreshold : EntityEffectCondition
         throw new NotImplementedException();
     }
 
-    public override string GuidebookExplanation(IPrototypeManager prototype)
+    public override string GuidebookExplanation(IPrototypeManager prototype, IEntitySystemManager sysManager)
     {
-        ReagentPrototype? reagentProto = null;
+
+        ReagentDefinition? reagentProto = null;
         if (Reagent is not null)
-            prototype.TryIndex(Reagent, out reagentProto);
+            sysManager.GetEntitySystem<ChemRegistrySystem>().TryIndexReagent(Reagent, out reagentProto);
 
         return Loc.GetString("reagent-effect-condition-guidebook-reagent-threshold",
             ("reagent", reagentProto?.LocalizedName ?? Loc.GetString("reagent-effect-condition-guidebook-this-reagent")),

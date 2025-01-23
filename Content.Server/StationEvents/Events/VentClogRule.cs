@@ -8,6 +8,8 @@ using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -15,6 +17,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
 {
     [Dependency] private readonly SmokeSystem _smoke = default!;
+    [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
 
     protected override void Started(EntityUid uid, VentClogRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -24,9 +27,7 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
             return;
 
         // TODO: "safe random" for chems. Right now this includes admin chemicals.
-        var allReagents = PrototypeManager.EnumeratePrototypes<ReagentPrototype>()
-            .Where(x => !x.Abstract)
-            .Select(x => x.ID).ToList();
+        var allReagents = _chemRegistry.EnumerateReagentIds().ToList();
 
         foreach (var (_, transform) in EntityManager.EntityQuery<GasVentPumpComponent, TransformComponent>())
         {

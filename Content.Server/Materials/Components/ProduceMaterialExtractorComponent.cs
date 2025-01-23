@@ -1,7 +1,7 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Server.Materials.Components;
 
@@ -21,7 +21,7 @@ public sealed partial class ProduceMaterialExtractorComponent : Component
     /// List of reagents that determines how much material is yielded from a produce.
     /// </summary>
     [DataField]
-    public List<ProtoId<ReagentPrototype>> ExtractionReagents = new()
+    public List<ReagentId> ExtractionReagents = new()
     {
         "Nutriment"
     };

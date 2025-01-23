@@ -16,7 +16,8 @@ public abstract partial class EntityEffectCondition
     /// Effect explanations are of the form "[chance to] [action] when [condition] and [condition]"
     /// </summary>
     /// <param name="prototype"></param>
+    /// <param name="sysManager"></param>
     /// <returns></returns>
-    public abstract string GuidebookExplanation(IPrototypeManager prototype);
+    public abstract string GuidebookExplanation(IPrototypeManager prototype, IEntitySystemManager sysManager);
 }
 

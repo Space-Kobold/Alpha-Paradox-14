@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.ReagentSpeed;
 
@@ -30,5 +31,5 @@ public sealed partial class ReagentSpeedComponent : Component
     /// Small number means faster large number means slower.
     /// </summary>
     [DataField(required: true)]
-    public Dictionary<ProtoId<ReagentPrototype>, float> Modifiers = new();
+    public Dictionary<ReagentId, float> Modifiers = new();
 }

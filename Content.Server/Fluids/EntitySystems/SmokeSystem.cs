@@ -21,7 +21,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
-
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -44,6 +44,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
 
     private EntityQuery<SmokeComponent> _smokeQuery;
     private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery;
@@ -278,7 +279,7 @@ public sealed class SmokeSystem : EntitySystem
         {
             if (reagentQuantity.Quantity == FixedPoint2.Zero)
                 continue;
-            var reagentProto = _prototype.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+            var reagentProto = _chemRegistry.IndexReagent(reagentQuantity.Reagent.Prototype);
 
             _reactive.ReactionEntity(entity, ReactionMethod.Touch, reagentProto, reagentQuantity, transferSolution);
             if (!blockIngestion)
@@ -313,8 +314,28 @@ public sealed class SmokeSystem : EntitySystem
             if (reagentQuantity.Quantity == FixedPoint2.Zero)
                 continue;
 
-            var reagent = _prototype.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+            var reagent = _chemRegistry.IndexReagent(reagentQuantity.Reagent.Prototype);
             reagent.ReactionTile(tile, reagentQuantity.Quantity, EntityManager, reagentQuantity.Reagent.Data);
+
+            if (!tile.Tile.IsEmpty)
+            {
+                FixedPoint2 removed = 0;
+                foreach (var reaction in reagent.TileReactions)
+                {
+                    removed += reaction.TileReact(
+                        tile,
+                        reagent,
+                        reagentQuantity.Quantity - removed,
+                        EntityManager,
+                        reagentQuantity.Reagent.Data);
+
+                    if (removed > reagentQuantity.Quantity)
+                        throw new Exception("Removed more than we have!");
+
+                    if (removed == reagentQuantity.Quantity)
+                        break;
+                }
+            }
         }
     }
 

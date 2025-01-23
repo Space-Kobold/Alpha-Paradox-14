@@ -1,6 +1,8 @@
 using Content.Server.Animals.Systems;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared._APCore.Chemistry.Registry;
 using Content.Shared.Chemistry.Reagent;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Server.Chemistry.Components;
 
@@ -26,7 +28,7 @@ public sealed partial class TransformableContainerComponent : Component
     /// It is used to help determine if a transformation is needed on solution update.
     /// </summary>
     [DataField("currentReagent")]
-    public ReagentPrototype? CurrentReagent;
+    public ReagentDefinition? CurrentReagent;
 
     /// <summary>
     /// This returns whether this container in a transformed or initial state.

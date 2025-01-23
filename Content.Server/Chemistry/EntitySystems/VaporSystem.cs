@@ -16,19 +16,22 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
 using System.Numerics;
+using Content.Shared._APCore.Chemistry.Reaction.System;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class VaporSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly SharedMapSystem _map = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly ReactiveSystem _reactive = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
+        [Dependency] private readonly ChemicalReactionSystem _chemicalReactionSystem = default!;
 
         private const float ReactTime = 0.125f;
 
@@ -119,15 +122,21 @@ namespace Content.Server.Chemistry.EntitySystems
                 var tile = _map.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
-                    if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                    var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+                    if (reagentQuantity.Quantity == FixedPoint2.Zero)
+                        continue;
+                    var reagent = _chemRegistry.IndexReagent(reagentQuantity.Reagent.Prototype);
 
                     var reaction =
-                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f, EntityManager, reagentQuantity.Reagent.Data);
+                        _chemicalReactionSystem.ReactionTile(tile,
+                            reagent,
+                            reagentQuantity.Quantity / vapor.TransferAmount * 0.25f,
+                            EntityManager,
+                            reagentQuantity.Reagent.Data);
 
                     if (reaction > reagentQuantity.Quantity)
                     {
-                        Log.Error($"Tried to tile react more than we have for reagent {reagentQuantity}. Found {reaction} and we only have {reagentQuantity.Quantity}");
+                        Log.Error($"Tried to tile react more than we have for reagent {reagentQuantity}. " +
+                                  $"Found {reaction} and we only have {reagentQuantity.Quantity}");
                         reaction = reagentQuantity.Quantity;
                     }
 

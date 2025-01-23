@@ -1,12 +1,12 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Fluids;
 
 public abstract partial class SharedPuddleSystem
 {
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Water = "Water";
+    private static readonly ReagentId Water = "Water";
 
     public static readonly string[] EvaporationReagents = [Water];
 

@@ -14,6 +14,8 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared._APCore.Chemistry.Registry;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.GameStates;
@@ -69,6 +71,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] protected readonly ChemRegistrySystem ChemRegistry = default!;
 
     public override void Initialize()
     {
@@ -450,7 +453,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
         else
         {
-            var proto = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+            var proto = ChemRegistry.IndexReagent(reagentQuantity.Reagent.Prototype);
             solution.AddReagent(proto, acceptedQuantity, temperature.Value, PrototypeManager);
         }
 
@@ -803,7 +806,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        if (!PrototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
+        if (!ChemRegistry.TryIndexReagent(primaryReagent.Value.Prototype, out var primary))
         {
             Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
             return;
@@ -830,16 +833,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 .ThenBy(pair => pair.Key.LocalizedName);
 
             // Add descriptions of immediately recognizable reagents, like water or beer
-            var recognized = new List<ReagentPrototype>();
+            var recognized = new List<ReagentDefinition>();
             foreach (var keyValuePair in sortedReagentPrototypes)
             {
-                var proto = keyValuePair.Key;
-                if (!proto.Recognizable)
+                var reagent = keyValuePair.Key;
+                if (!reagent.Recognizable)
                 {
                     continue;
                 }
-
-                recognized.Add(proto);
+                recognized.Add(reagent);
             }
 
             // Skip if there's nothing recognizable

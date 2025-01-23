@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text.Json.Serialization;
+using Content.Shared._APCore.Chemistry.Registry;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
@@ -60,7 +61,7 @@ public abstract partial class EntityEffect
         return Loc.GetString(ReagentEffectFormat, ("effect", effect), ("chance", Probability),
             ("conditionCount", Conditions?.Length ?? 0),
             ("conditions",
-                ContentLocalizationManager.FormatList(Conditions?.Select(x => x.GuidebookExplanation(prototype)).ToList() ??
+                ContentLocalizationManager.FormatList(Conditions?.Select(x => x.GuidebookExplanation(prototype, entSys)).ToList() ??
                                                         new List<string>())));
     }
 }
@@ -114,13 +115,20 @@ public record class EntityEffectReagentArgs : EntityEffectBaseArgs
 
     public FixedPoint2 Quantity;
 
-    public ReagentPrototype? Reagent;
+    public ReagentDefinition? Reagent;
 
     public ReactionMethod? Method;
 
     public FixedPoint2 Scale;
 
-    public EntityEffectReagentArgs(EntityUid targetEntity, IEntityManager entityManager, EntityUid? organEntity, Solution? source, FixedPoint2 quantity, ReagentPrototype? reagent, ReactionMethod? method, FixedPoint2 scale) : base(targetEntity, entityManager)
+    public EntityEffectReagentArgs(EntityUid targetEntity,
+        IEntityManager entityManager,
+        EntityUid? organEntity,
+        Solution? source,
+        FixedPoint2 quantity,
+        ReagentDefinition? reagent,
+        ReactionMethod? method,
+        FixedPoint2 scale) : base(targetEntity, entityManager)
     {
         OrganEntity = organEntity;
         Source = source;

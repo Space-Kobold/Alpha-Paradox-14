@@ -1,4 +1,5 @@
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared._APCore.Chemistry.Registry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -13,7 +14,7 @@ namespace Content.Server.Chemistry.TileReactions
     public sealed partial class SpillIfPuddlePresentTileReaction : ITileReaction
     {
         public FixedPoint2 TileReact(TileRef tile,
-            ReagentPrototype reagent,
+            ReagentDefinition reagent,
             FixedPoint2 reactVolume,
             IEntityManager entityManager,
             List<ReagentData>? data)

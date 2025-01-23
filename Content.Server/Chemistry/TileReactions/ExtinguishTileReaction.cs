@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared._APCore.Chemistry.Registry;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -15,7 +16,7 @@ namespace Content.Server.Chemistry.TileReactions
         [DataField("coolingTemperature")] private float _coolingTemperature = 2f;
 
         public FixedPoint2 TileReact(TileRef tile,
-            ReagentPrototype reagent,
+            ReagentDefinition reagent,
             FixedPoint2 reactVolume,
             IEntityManager entityManager,
             List<ReagentData>? data)
@@ -32,7 +33,8 @@ namespace Content.Server.Chemistry.TileReactions
 
             environment.Temperature =
                 MathF.Max(MathF.Min(environment.Temperature - (_coolingTemperature * 1000f),
-                        environment.Temperature / _coolingTemperature), Atmospherics.TCMB);
+                        environment.Temperature / _coolingTemperature),
+                    Atmospherics.TCMB);
 
             atmosphereSystem.ReactTile(tile.GridUid, tile.GridIndices);
             atmosphereSystem.HotspotExtinguish(tile.GridUid, tile.GridIndices);

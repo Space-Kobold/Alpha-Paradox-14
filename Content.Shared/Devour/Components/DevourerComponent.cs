@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Devour.Components;
 
@@ -62,8 +63,8 @@ public sealed partial class DevourerComponent : Component
     /// <summary>
     /// The chemical ID injected upon devouring
     /// </summary>
-    [DataField("chemical", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
-    public string Chemical = "Ichor";
+    [DataField("chemical")]
+    public ReagentId Chemical = "Ichor";
 
     /// <summary>
     /// The amount of ichor injected per devour

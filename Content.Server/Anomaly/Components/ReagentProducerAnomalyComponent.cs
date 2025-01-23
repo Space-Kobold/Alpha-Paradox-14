@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Server.Anomaly.Components;
 /// <summary>
@@ -43,17 +44,17 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     /// Category of dangerous reagents for injection. Various toxins and poisons
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public List<ProtoId<ReagentPrototype>> DangerousChemicals = new();
+    public List<ReagentId> DangerousChemicals = new();
     /// <summary>
     /// Category of useful reagents for injection. Medicine and other things that players WANT to get
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public List<ProtoId<ReagentPrototype>> UsefulChemicals = new();
+    public List<ReagentId> UsefulChemicals = new();
     /// <summary>
     /// Category of fun reagents for injection. Glue, drugs, beer. Something that will bring fun.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public List<ProtoId<ReagentPrototype>> FunChemicals = new();
+    public List<ReagentId> FunChemicals = new();
 
     /// <summary>
     /// Noise made when anomaly pulse.
@@ -85,7 +86,7 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     /// The name of the reagent that the anomaly produces.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<ReagentPrototype> ProducingReagent = "Water";
+    public ReagentId ProducingReagent = "Water";
 
     /// <summary>
     /// Solution name where the substance is generated

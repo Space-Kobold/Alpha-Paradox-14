@@ -5,6 +5,7 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.Inventory;
 using Content.Server.Popups;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
@@ -53,6 +54,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly ForensicsSystem _forensics = default!;
+    [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
 
     public override void Initialize()
     {
@@ -83,7 +85,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
         var total = 0f;
         foreach (var quantity in solution.Contents)
         {
-            var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
+            var reagent = _chemRegistry.IndexReagent(quantity.Reagent.Prototype);
             if (reagent.Metabolisms == null)
                 continue;
 

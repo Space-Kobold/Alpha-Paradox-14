@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Chemistry.Components;
 
@@ -17,7 +18,7 @@ public sealed partial class RehydratableComponent : Component
     /// The reagent that must be present to count as hydrated.
     /// </summary>
     [DataField("catalyst")]
-    public ProtoId<ReagentPrototype> CatalystPrototype = "Water";
+    public ReagentId CatalystPrototype = "Water";
 
     /// <summary>
     /// The minimum amount of catalyst that must be present to be hydrated.

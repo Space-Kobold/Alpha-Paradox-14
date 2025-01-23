@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Chemistry.Components;
 
@@ -105,7 +106,7 @@ public sealed partial class InjectorComponent : Component
     /// A null ReagentWhitelist indicates all reagents are allowed.
     /// </summary>
     [DataField]
-    public List<ProtoId<ReagentPrototype>>? ReagentWhitelist = null;
+    public List<ReagentId>? ReagentWhitelist = null;
 
     #region Arguments for injection doafter
 

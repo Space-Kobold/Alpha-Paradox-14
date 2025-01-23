@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Animals;
 
@@ -17,7 +18,7 @@ public sealed partial class UdderComponent : Component
     ///     The reagent to produce.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<ReagentPrototype> ReagentId = new();
+    public ReagentId ReagentId = new();
 
     /// <summary>
     ///     The name of <see cref="Solution"/>.

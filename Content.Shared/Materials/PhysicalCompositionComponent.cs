@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Materials;
 
@@ -25,7 +26,7 @@ public sealed partial class PhysicalCompositionComponent : Component
     /// <summary>
     /// The chemicals that "make up" this entity
     /// </summary>
-    [DataField("chemicalComposition", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
-    public Dictionary<string, FixedPoint2> ChemicalComposition = new();
+    [DataField("chemicalComposition")]
+    public Dictionary<ReagentId, FixedPoint2> ChemicalComposition = new();
     // TODO use ReagentQuantity[]
 }

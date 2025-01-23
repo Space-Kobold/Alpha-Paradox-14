@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Components;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Random;
@@ -13,6 +14,7 @@ public sealed class SolutionRandomFillSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
 
     public override void Initialize()
     {
@@ -31,13 +33,16 @@ public sealed class SolutionRandomFillSystem : EntitySystem
         var reagent = pick.reagent;
         var quantity = pick.quantity;
 
-        if (!_proto.HasIndex<ReagentPrototype>(reagent))
+        if (!_chemRegistry.ReagentIsDefined(reagent))
         {
             Log.Error($"Tried to add invalid reagent Id {reagent} using SolutionRandomFill.");
             return;
         }
 
-        _solutionsSystem.EnsureSolutionEntity(entity.Owner, entity.Comp.Solution, out var target , pick.quantity);
+        _solutionsSystem.EnsureSolutionEntity(entity.Owner,
+            entity.Comp.Solution,
+            out var target ,
+            pick.quantity);
         if(target.HasValue)
             _solutionsSystem.TryAddReagent(target.Value, reagent, quantity);
     }

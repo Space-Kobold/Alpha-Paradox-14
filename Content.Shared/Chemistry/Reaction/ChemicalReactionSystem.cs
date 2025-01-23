@@ -9,11 +9,12 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Collections.Frozen;
 using System.Linq;
+using Content.Shared._APCore.Chemistry.Registry;
 
 
 namespace Content.Shared.Chemistry.Reaction
 {
-    public sealed class ChemicalReactionSystem : EntitySystem
+    public sealed partial class ChemicalReactionSystem : EntitySystem
     {
         /// <summary>
         ///     The maximum number of reactions that may occur when a solution is changed.
@@ -196,14 +197,27 @@ namespace Content.Shared.Chemistry.Reaction
             return products;
         }
 
-        private void OnReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, ReagentPrototype? reagent, FixedPoint2 unitReactions)
+        private void OnReaction(Entity<SolutionComponent> soln,
+            ReactionDefinition reaction,
+            ReagentDefinition? reagent,
+            FixedPoint2 unitReactions)
         {
-            var args = new EntityEffectReagentArgs(soln, EntityManager, null, soln.Comp.Solution, unitReactions, reagent, null, 1f);
+            var args = new EntityEffectReagentArgs(soln,
+                EntityManager,
+                null,
+                soln.Comp.Solution,
+                unitReactions,
+                reagent,
+                null,
+                1f);
 
             var posFound = _transformSystem.TryGetMapOrGridCoordinates(soln, out var gridPos);
 
-            _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
-                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
+            _adminLogger.Add(LogType.ChemicalReaction,
+                reaction.Impact,
+                $"Chemical reaction {reaction.Id:reaction} occurred with strength " +
+                $"{unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at " +
+                $"Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
 
             foreach (var effect in reaction.Effects)
             {
@@ -214,7 +228,7 @@ namespace Content.Shared.Chemistry.Reaction
                 {
                     var entity = args.TargetEntity;
                     _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                        $"Reaction effect {effect.GetType().Name:effect} of reaction {reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
+                        $"Reaction effect {effect.GetType().Name:effect} of reaction {reaction.Id:reaction} applied on entity {ToPrettyString(entity):entity} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
                 }
 
                 effect.Effect(args);

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Server.Body.Components;
+using Content.Shared._APCore.Chemistry.Registry;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -35,15 +36,15 @@ public sealed class ReagentEntry
     [JsonPropertyName("metabolisms")]
     public Dictionary<string, ReagentEffectsEntry>? Metabolisms { get; }
 
-    public ReagentEntry(ReagentPrototype proto)
+    public ReagentEntry(ReagentDefinition reagent)
     {
-        Id = proto.ID;
-        Name = proto.LocalizedName;
-        Group = proto.Group;
-        Description = proto.LocalizedDescription;
-        PhysicalDescription = proto.LocalizedPhysicalDescription;
-        SubstanceColor = proto.SubstanceColor.ToHex();
-        Metabolisms = proto.Metabolisms?.ToDictionary(x => x.Key.Id, x => x.Value);
+        Id = reagent.Id;
+        Name = reagent.LocalizedName;
+        Group = reagent.Group;
+        Description = reagent.LocalizedDescription;
+        PhysicalDescription = reagent.LocalizedPhysicalDescription;
+        SubstanceColor = reagent.SubstanceColor.ToHex();
+        Metabolisms = reagent.Metabolisms?.ToDictionary(x => x.Key.Id, x => x.Value);
     }
 }
 

@@ -5,6 +5,7 @@ using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Tools.Components;
 
@@ -27,7 +28,7 @@ public sealed partial class WelderComponent : Component
     ///     Reagent that will be used as fuel for welding.
     /// </summary>
     [DataField]
-    public ProtoId<ReagentPrototype> FuelReagent = "WeldingFuel";
+    public ReagentId FuelReagent = "WeldingFuel";
 
     /// <summary>
     ///     Fuel consumption per second while the welder is active.

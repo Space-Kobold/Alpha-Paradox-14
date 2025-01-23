@@ -2,7 +2,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared._APCore.Chemistry.Reagents;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -140,7 +140,7 @@ namespace Content.Server.Body.Components
         ///     Slime-people might use slime as their blood or something like that.
         /// </remarks>
         [DataField]
-        public ProtoId<ReagentPrototype> BloodReagent = "Blood";
+        public ReagentId BloodReagent = "Blood";
 
         /// <summary>Name/Key that <see cref="BloodSolution"/> is indexed by.</summary>
         [DataField]

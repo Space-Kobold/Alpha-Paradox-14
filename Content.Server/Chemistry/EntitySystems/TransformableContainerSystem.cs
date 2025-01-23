@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Components;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.NameModifier.EntitySystems;
@@ -8,10 +9,10 @@ namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed class TransformableContainerSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
 
     public override void Initialize()
     {
@@ -46,18 +47,18 @@ public sealed class TransformableContainerSystem : EntitySystem
         var reagentId = solution.GetPrimaryReagentId();
 
         //If biggest reagent didn't changed - don't change anything at all
-        if (entity.Comp.CurrentReagent != null && entity.Comp.CurrentReagent.ID == reagentId?.Prototype)
+        if (entity.Comp.CurrentReagent != null && entity.Comp.CurrentReagent.Id == reagentId?.Prototype)
         {
             return;
         }
 
         //Only reagents with spritePath property can change appearance of transformable containers!
         if (!string.IsNullOrWhiteSpace(reagentId?.Prototype)
-            && _prototypeManager.TryIndex(reagentId.Value.Prototype, out ReagentPrototype? proto))
+            && _chemRegistry.TryIndexReagent(reagentId.Value.Prototype, out var reagent))
         {
             var metadata = MetaData(entity.Owner);
-            _metadataSystem.SetEntityDescription(entity.Owner, proto.LocalizedDescription, metadata);
-            entity.Comp.CurrentReagent = proto;
+            _metadataSystem.SetEntityDescription(entity.Owner, reagent.LocalizedDescription, metadata);
+            entity.Comp.CurrentReagent = reagent;
             entity.Comp.Transformed = true;
         }
 

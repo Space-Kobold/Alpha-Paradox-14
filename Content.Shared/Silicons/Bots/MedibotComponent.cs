@@ -3,6 +3,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Silicons.Bots;
 
@@ -37,7 +38,7 @@ public sealed partial class MedibotTreatment
     /// Reagent to inject into the patient.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<ReagentPrototype> Reagent = string.Empty;
+    public ReagentId Reagent = string.Empty;
 
     /// <summary>
     /// How much of the reagent to inject.

@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Research.Prototypes
 {
@@ -44,7 +45,7 @@ namespace Content.Shared.Research.Prototypes
         public EntProtoId? Result;
 
         [DataField]
-        public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>? ResultReagents;
+        public Dictionary<ReagentId, FixedPoint2>? ResultReagents;
 
         /// <summary>
         ///     An entity whose sprite is displayed in the ui in place of the actual recipe result.

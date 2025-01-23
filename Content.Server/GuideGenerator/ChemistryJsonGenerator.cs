@@ -2,12 +2,11 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Content.Shared.Chemistry.Reaction;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.GuideGenerator;
 
@@ -15,24 +14,24 @@ public sealed class ChemistryJsonGenerator
 {
     public static void PublishJson(StreamWriter file)
     {
-        var prototype = IoCManager.Resolve<IPrototypeManager>();
+        var chemRegistry = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChemRegistrySystem>();
         var prototypes =
-            prototype
-                .EnumeratePrototypes<ReagentPrototype>()
-                .Where(x => !x.Abstract)
+            chemRegistry
+                .EnumerateReagents()
+                //.Where(x => !x.Abstract)
                 .Select(x => new ReagentEntry(x))
                 .ToDictionary(x => x.Id, x => x);
 
         var reactions =
-            prototype
-                .EnumeratePrototypes<ReactionPrototype>()
+            chemRegistry
+                .EnumerateReactions()
                 .Where(x => x.Products.Count != 0);
 
         foreach (var reaction in reactions)
         {
             foreach (var product in reaction.Products.Keys)
             {
-                prototypes[product].Recipes.Add(reaction.ID);
+                prototypes[product].Recipes.Add(reaction.Id);
             }
         }
 

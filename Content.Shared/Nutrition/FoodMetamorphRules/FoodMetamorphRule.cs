@@ -7,6 +7,7 @@ using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Nutrition.FoodMetamorphRules;
 
@@ -126,7 +127,7 @@ public sealed partial class ElementHasTags : FoodMetamorphRule
 public sealed partial class FoodHasReagent : FoodMetamorphRule
 {
     [DataField(required: true)]
-    public ProtoId<ReagentPrototype> Reagent = new();
+    public ReagentId Reagent = new();
 
     [DataField(required: true)]
     public MinMax Count;

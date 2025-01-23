@@ -1,6 +1,7 @@
 using System.Collections.Frozen;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Content.Shared._APCore.Chemistry.Registry;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
@@ -142,27 +143,6 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
-        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
-        {
-            var removed = FixedPoint2.Zero;
-
-            if (tile.Tile.IsEmpty)
-                return removed;
-
-            foreach (var reaction in TileReactions)
-            {
-                removed += reaction.TileReact(tile, this, reactVolume - removed, entityManager, data);
-
-                if (removed > reactVolume)
-                    throw new Exception("Removed more than we have!");
-
-                if (removed == reactVolume)
-                    break;
-            }
-
-            return removed;
-        }
-
         public void ReactionPlant(EntityUid? plantHolder, ReagentQuantity amount, Solution solution)
         {
             if (plantHolder == null)
@@ -170,21 +150,6 @@ namespace Content.Shared.Chemistry.Reagent
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new EntityEffectReagentArgs(plantHolder.Value, entMan, null, solution, amount.Quantity, this, null, 1f);
-            foreach (var plantMetabolizable in PlantMetabolisms)
-            {
-                if (!plantMetabolizable.ShouldApply(args, random))
-                    continue;
-
-                if (plantMetabolizable.ShouldLog)
-                {
-                    var entity = args.TargetEntity;
-                    entMan.System<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
-                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID:reagent} applied on entity {entMan.ToPrettyString(entity):entity} at {entMan.GetComponent<TransformComponent>(entity).Coordinates:coordinates}");
-                }
-
-                plantMetabolizable.Effect(args);
-            }
         }
     }
 
@@ -197,15 +162,15 @@ namespace Content.Shared.Chemistry.Reagent
 
         public List<string>? PlantMetabolisms = null;
 
-        public ReagentGuideEntry(ReagentPrototype proto, IPrototypeManager prototype, IEntitySystemManager entSys)
+        public ReagentGuideEntry(ReagentDefinition reagent, IPrototypeManager prototype, IEntitySystemManager entSys)
         {
-            ReagentPrototype = proto.ID;
-            GuideEntries = proto.Metabolisms?
+            ReagentPrototype = reagent.Id;
+            GuideEntries = reagent.Metabolisms?
                 .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys)))
                 .ToDictionary(x => x.Key, x => x.Item2);
-            if (proto.PlantMetabolisms.Count > 0)
+            if (reagent.PlantMetabolisms.Count > 0)
             {
-                PlantMetabolisms = new List<string> (proto.PlantMetabolisms
+                PlantMetabolisms = new List<string> (reagent.PlantMetabolisms
                     .Select(x => x.GuidebookEffectDescription(prototype, entSys))
                     .Where(x => x is not null)
                     .Select(x => x!)

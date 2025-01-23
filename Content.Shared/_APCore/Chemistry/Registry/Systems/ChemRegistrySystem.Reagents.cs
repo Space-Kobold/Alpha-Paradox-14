@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0-no-copyleft-exception
 
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared._APCore.Chemistry.Reagents;
 
 namespace Content.Shared._APCore.Chemistry.Registry.Systems;
 
@@ -31,6 +32,14 @@ public sealed partial class ChemRegistrySystem
         foreach (var (_,data) in Reagents)
         {
             yield return data;
+        }
+    }
+
+    public IEnumerable<ReagentId> EnumerateReagentIds()
+    {
+        foreach (var (id,_) in Reagents)
+        {
+            yield return id;
         }
     }
 

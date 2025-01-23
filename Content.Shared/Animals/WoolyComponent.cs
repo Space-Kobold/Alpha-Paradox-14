@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using ReagentId = Content.Shared._APCore.Chemistry.Reagents.ReagentId;
 
 namespace Content.Shared.Animals;
 
@@ -17,7 +18,7 @@ public sealed partial class WoolyComponent : Component
     ///     The reagent to grow.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<ReagentPrototype> ReagentId = "Fiber";
+    public ReagentId ReagentId = "Fiber";
 
     /// <summary>
     ///     The name of <see cref="Solution"/>.

@@ -1,3 +1,5 @@
+using Content.Shared._APCore.Chemistry.Registry;
+using Content.Shared._APCore.Chemistry.Registry.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
@@ -16,6 +18,7 @@ public sealed class ReactiveSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ChemRegistrySystem _chemRegistry = default!;
 
     public void DoEntityReaction(EntityUid uid, Solution solution, ReactionMethod method)
     {
@@ -28,12 +31,15 @@ public sealed class ReactiveSystem : EntitySystem
     public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentQuantity reagentQuantity, Solution? source)
     {
         // We throw if the reagent specified doesn't exist.
-        var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-        ReactionEntity(uid, method, proto, reagentQuantity, source);
+        var reagent = _chemRegistry.IndexReagent(reagentQuantity.Reagent.Prototype);
+        ReactionEntity(uid, method, reagent, reagentQuantity, source);
     }
 
-    public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentPrototype proto,
-        ReagentQuantity reagentQuantity, Solution? source)
+    public void ReactionEntity(EntityUid uid,
+        ReactionMethod method,
+        ReagentDefinition reagent,
+        ReagentQuantity reagentQuantity,
+        Solution? source)
     {
         if (!TryComp(uid, out ReactiveComponent? reactive))
             return;
@@ -42,9 +48,9 @@ public sealed class ReactiveSystem : EntitySystem
         var args = new EntityEffectReagentArgs(uid, EntityManager, null, source, source?.GetReagentQuantity(reagentQuantity.Reagent) ?? reagentQuantity.Quantity, proto, method, 1f);
 
         // First, check if the reagent wants to apply any effects.
-        if (proto.ReactiveEffects != null && reactive.ReactiveGroups != null)
+        if (reagent.ReactiveEffects != null && reactive.ReactiveGroups != null)
         {
-            foreach (var (key, val) in proto.ReactiveEffects)
+            foreach (var (key, val) in reagent.ReactiveEffects)
             {
                 if (!val.Methods.Contains(method))
                     continue;
@@ -64,7 +70,9 @@ public sealed class ReactiveSystem : EntitySystem
                     {
                         var entity = args.TargetEntity;
                         _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                            $"Reactive effect {effect.GetType().Name:effect} of reagent {proto.ID:reagent} with method {method} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
+                            $"Reactive effect {effect.GetType().Name:effect} of reagent {reagent.ID:reagent} " +
+                            $"with method {method} applied on entity {ToPrettyString(entity):entity}" +
+                            $" at {Transform(entity).Coordinates:coordinates}");
                     }
 
                     effect.Effect(args);
@@ -80,7 +88,7 @@ public sealed class ReactiveSystem : EntitySystem
                 if (!entry.Methods.Contains(method))
                     continue;
 
-                if (entry.Reagents != null && !entry.Reagents.Contains(proto.ID))
+                if (entry.Reagents != null && !entry.Reagents.Contains(reagent.Id))
                     continue;
 
                 foreach (var effect in entry.Effects)
@@ -91,8 +99,11 @@ public sealed class ReactiveSystem : EntitySystem
                     if (effect.ShouldLog)
                     {
                         var entity = args.TargetEntity;
-                        _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                            $"Reactive effect {effect.GetType().Name:effect} of {ToPrettyString(entity):entity} using reagent {proto.ID:reagent} with method {method} at {Transform(entity).Coordinates:coordinates}");
+                        _adminLogger.Add(LogType.ReagentEffect,
+                            effect.LogImpact,
+                            $"Reactive effect {effect.GetType().Name:effect} of " +
+                            $"{ToPrettyString(entity):entity} using reagent {reagent.Id:reagent} with method {method}" +
+                            $" at {Transform(entity).Coordinates:coordinates}");
                     }
 
                     effect.Effect(args);
