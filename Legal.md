@@ -1,3 +1,6 @@
+# NOTICE:
+## Alpha Paradox 14 is no longer in development and is not accepting contributions
+
 # Disclaimer
 - The information presented here is for informational purposes only and does not constitute legal advice, nor is it a replacement for reading license text. If there is a conflict between this text and any of the attached licenses/agreements, or other agreements with SpaceKobold those agreements take precedence.
 
